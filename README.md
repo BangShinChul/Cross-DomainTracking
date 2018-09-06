@@ -34,6 +34,9 @@ Google 웹 로그 분석은 고유 한 클라이언트 ID를 생성하여 사용
 ## gtag.js로 교차 도메인 추적
 > 참조 : https://developers.google.com/analytics/devguides/collection/gtagjs/cross-domain </br>
    - 도메인 자동 연결 </br>
+   > 대상 도메인을 원본 도메인에 자동 교차 도메인 추적을 설정하려면 linker, domains매개 변수 설정</br>
+   > gtag.js는 대상 도메인(또는 도메인)을 가리키는 링크를 수신하고 탐색 시작 직전에 링크에 자동으로 링커 매개 변수를 추가</br>
+   > 링커 매개 변수는 2 분 후에 만료되기 때문에 사용자가 링크를 클릭하여 링커 매개 변수를 추가 할 때까지 대기
    ```
    gtag('config', 'GA_TRACKING_ID', {
      'linker': {
@@ -43,6 +46,9 @@ Google 웹 로그 분석은 고유 한 클라이언트 ID를 생성하여 사용
    ```
    
   - 링커 매개 변수를 허용하도록 사이트 구성</br>
+  > 사용자가 URL에 링커 매개 변수가 있는 대상 도메인의 페이지에 도착하면 gtag.js는 해당 매개 변수를 추적
+  > 대상 도메인이 도메인을 자동으로 연결하도록 구성된 경우 기본적으로 링커 매개 변수를 수락
+  > 대상 도메인이 도메인을 자동으로 연결하도록 구성되지 않은 경우 대상 속성의 config에 매개 변수 accept_incoming속성을 설정
    ```
    gtag('config', 'GA_TRACKING_ID', {
      'linker': {
@@ -51,7 +57,9 @@ Google 웹 로그 분석은 고유 한 클라이언트 ID를 생성하여 사용
    });
    ```
    
-   - 양방향 교차 도메인 추적 </br>
+   - 양방향 교차 도메인 추적</br>
+   > 먼저 방문할 도메인을 알 수 없는 경우 적용
+   > 두 도메인 모두 자동연결 활성화 및 링커 매개변수 허용, 도메인 자동연결로 구성
    ```
    //example-source.com 설정
    gtag('config', 'GA_TRACKING_ID', {
