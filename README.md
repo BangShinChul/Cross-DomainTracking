@@ -5,7 +5,7 @@
 > https://developers.google.com/analytics/devguides/collection/gtagjs/cross-domain </br>
    
    
-## 교차 도메인이란?
+## 교차 도메인 추적 이란?
 교차 도메인 추적을 이용하면 애널리틱스 시스템이 관련 사이트 2개에서 발생하는 여러 세션을 단일 세션으로 처리</br>
 Google 웹 로그 분석은 고유 한 클라이언트 ID를 생성하여 사용자가 신규인지 재방인지를 결정.</br>
 일치하는 클라이언트 ID가 이미 전송 된 경우 재방문으로 간주</br>
