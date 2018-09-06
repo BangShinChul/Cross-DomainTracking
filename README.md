@@ -13,9 +13,11 @@ Google 웹 로그 분석은 고유 한 클라이언트 ID를 생성하여 사용
 여러 도메인을 소유하고 있으며 하나의 속성으로 취급하려는 경우 추적하려는 모든 도메인에서 클라이언트 ID를 공유하여 처리</br>
    
    
-## 도메인간에 클라이언트 ID를 공유하는 과정은 두 단계처리
- - 원본 도메인은 대상 도메인을 가리키는 모든 URL에 원본 도메인의 클라이언트 ID가 포함되도록해야합니다.</br>
- - 대상 도메인은 사용자가 URL을 탐색 할 때 URL에서 클라이언트 ID가 있는지 확인해야합니다.</br>
+## 도메인간 클라이언트 ID 공유과정
+ - 원본 도메인은 대상 도메인을 가리키는 모든 URL에 원본 도메인의 클라이언트 ID가 포함되도록 처리</br>
+ - 대상 도메인은 사용자가 URL을 탐색 할 때 URL에서 클라이언트 ID가 있는지 확인</br>
+ - gtag.js로 교차 도메인 추적은 대상 도메인을 가리키는 URL에 링커 매개변수를 추가하여 처리</br>
+ - 링커 매개변수에는 클라이언트 ID와 그 안에 인코딩 된 현재 타임 스탬프 및 브라우저 메타 데이터가 포함</br>
    
     
 ## 설정별 추적가이드
@@ -31,4 +33,54 @@ Google 웹 로그 분석은 고유 한 클라이언트 ID를 생성하여 사용
    
 ## gtag.js로 교차 도메인 추적
 > 참조 : https://developers.google.com/analytics/devguides/collection/gtagjs/cross-domain </br>
-
+   - 도메인 자동 연결 </br>
+   ```
+   gtag('config', 'GA_TRACKING_ID', {
+     'linker': {
+         'domains': ['example.com']
+      }
+   });
+   ```
+   
+  - 링커 매개 변수를 허용하도록 사이트 구성</br>
+   ```
+   gtag('config', 'GA_TRACKING_ID', {
+     'linker': {
+          'accept_incoming': true
+      }
+   });
+   ```
+   
+   - 양방향 교차 도메인 추적 </br>
+   ```
+   //example-source.com 설정
+   gtag('config', 'GA_TRACKING_ID', {
+     'linker': {
+          'domains': ['example-destination.com']
+      }
+   });
+   
+   //example-destination.com 설정
+   gtag('config', 'GA_TRACKING_ID', {
+      'linker': {
+          'domains': ['example-source.com']
+      }
+   });
+   ```
+   
+   - 양방향 교차 도메인 추적 단순화 (모든 도메인에서 단일 스 니펫 사용) </br>
+   ```
+   //example-1.com
+   gtag('config', 'GA_TRACKING_ID_1', {
+      'linker': {
+          'domains': ['example-1.com', 'example-2.com']
+       }
+   });
+   
+   //example-2.com
+   gtag('config', 'GA_TRACKING_ID_2', {
+      'linker': {
+          'domains': ['example-1.com', 'example-2.com']
+      }
+   });
+   ```
